@@ -1,0 +1,504 @@
+import sys
+from PyQt5.QtWidgets import QVBoxLayout
+import pyrebase
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+import sys
+from PyQt5.QtWidgets import QVBoxLayout
+import pyrebase
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from datetime import datetime
+import matplotlib.pyplot as plt
+from PyQt5 import QtCore, QtGui, QtWidgets
+###############################################################################
+##################################################################################
+###
+config = {
+'apiKey': "AIzaSyCbiL3v6Hk4G2STq7EYVNyKB9PFk-kWJjo",
+'authDomain': "healthmonitor-cc0f4.firebaseapp.com",
+'databaseURL':"https://healthmonitor-cc0f4-default-rtdb.firebaseio.com/",
+'projectId': "healthmonitor-cc0f4",
+'storageBucket': "healthmonitor-cc0f4.appspot.com",
+'messagingSenderId': "192746111382",
+'appId': "1:192746111382:web:85fa558208fa51f10b1db7",
+'measurementId': "G-0GX5NB97BJ"
+}
+firebase = pyrebase.initialize_app(config)
+database = firebase.database()
+43
+###############################################################################
+##################################################################################
+#
+class Ui_MainWindow(object):
+def setupUi(self, MainWindow):
+MainWindow.setObjectName("MainWindow")
+MainWindow.resize(1920, 1080)
+self.centralwidget = QtWidgets.QWidget(MainWindow)
+self.centralwidget.setObjectName("centralwidget")
+self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
+self.stackedWidget.setGeometry(QtCore.QRect(19, 9, 1891, 1061))
+self.stackedWidget.setObjectName("stackedWidget")
+############################################################### PAGE 1
+##################################################################################
+###########
+self.page_1 = QtWidgets.QWidget()
+self.page_1.setObjectName("page_1")
+self.TitleLabel = QtWidgets.QLabel(self.page_1)
+self.TitleLabel.setGeometry(QtCore.QRect(160, 60, 1751, 101))
+font = QtGui.QFont()
+font.setPointSize(28)
+font.setBold(True)
+font.setWeight(75)
+self.TitleLabel.setFont(font)
+self.TitleLabel.setObjectName("TitleLabel")
+self.AddButton = QtWidgets.QPushButton(self.page_1)
+self.AddButton.setGeometry(QtCore.QRect(320, 340, 481, 131))
+font = QtGui.QFont()
+font.setPointSize(18)
+font.setBold(False)
+font.setWeight(50)
+self.AddButton.setFont(font)
+44
+self.AddButton.setObjectName("AddButton")
+self.AddButton.clicked.connect(self.loads_page)
+self.HealthButton = QtWidgets.QPushButton(self.page_1)
+self.HealthButton.setGeometry(QtCore.QRect(1080, 340, 481, 131))
+font = QtGui.QFont()
+font.setPointSize(18)
+font.setBold(False)
+font.setWeight(50)
+self.HealthButton.setFont(font)
+self.HealthButton.setObjectName("HealthButton")
+self.HealthButton.clicked.connect(self.health_page)
+self.stackedWidget.addWidget(self.page_1)
+################################################################## PAGE 2
+##################################################################################
+##########
+self.page_2 = QtWidgets.QWidget()
+self.page_2.setObjectName("page_2")
+self.HomeButton1 = QtWidgets.QPushButton(self.page_2)
+self.HomeButton1.setGeometry(QtCore.QRect(0, 0, 111, 61))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.HomeButton1.setFont(font)
+icon = QtGui.QIcon()
+icon.addPixmap(QtGui.QPixmap("../PyQt5/GUI Icons/icons/home.png"),
+QtGui.QIcon.Normal, QtGui.QIcon.Off)
+self.HomeButton1.setIcon(icon)
+self.HomeButton1.setObjectName("HomeButton1")
+self.HomeButton1.clicked.connect(self.home_page)
+self.SelectLabel = QtWidgets.QLabel(self.page_2)
+self.SelectLabel.setGeometry(QtCore.QRect(200, 150, 351, 91))
+font = QtGui.QFont()
+font.setPointSize(26)
+45
+font.setBold(False)
+font.setWeight(50)
+self.SelectLabel.setFont(font)
+self.SelectLabel.setObjectName("SelectLabel")
+self.Load1_Label = QtWidgets.QLabel(self.page_2)
+self.Load1_Label.setGeometry(QtCore.QRect(220, 340, 341, 61))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.Load1_Label.setFont(font)
+self.Load1_Label.setObjectName("Load1_Label")
+self.Load2_Label = QtWidgets.QLabel(self.page_2)
+self.Load2_Label.setGeometry(QtCore.QRect(210, 500, 341, 61))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.Load2_Label.setFont(font)
+self.Load2_Label.setObjectName("Load2_Label")
+self.Load3_Label = QtWidgets.QLabel(self.page_2)
+self.Load3_Label.setGeometry(QtCore.QRect(210, 650, 341, 61))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.Load3_Label.setFont(font)
+self.Load3_Label.setObjectName("Load3_Label")
+self.AddLabel = QtWidgets.QLabel(self.page_2)
+self.AddLabel.setGeometry(QtCore.QRect(820, 150, 351, 91))
+font = QtGui.QFont()
+font.setPointSize(26)
+self.AddLabel.setFont(font)
+self.AddLabel.setObjectName("AddLabel")
+self.NameLabel = QtWidgets.QLabel(self.page_2)
+self.NameLabel.setGeometry(QtCore.QRect(820, 330, 341, 61))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.NameLabel.setFont(font)
+46
+self.NameLabel.setObjectName("NameLabel")
+self.textEdit1 = QtWidgets.QTextEdit(self.page_2)
+self.textEdit1.setGeometry(QtCore.QRect(820, 430, 411, 81))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.textEdit1.setFont(font)
+self.textEdit1.setObjectName("textEdit1")
+self.RatingLabel = QtWidgets.QLabel(self.page_2)
+self.RatingLabel.setGeometry(QtCore.QRect(820, 570, 341, 61))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.RatingLabel.setFont(font)
+self.RatingLabel.setObjectName("RatingLabel")
+self.textEdit2 = QtWidgets.QTextEdit(self.page_2)
+self.textEdit2.setGeometry(QtCore.QRect(820, 650, 411, 81))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.textEdit2.setFont(font)
+self.textEdit2.setObjectName("textEdit2")
+self.EnterButton = QtWidgets.QPushButton(self.page_2)
+self.EnterButton.setGeometry(QtCore.QRect(920, 820, 211, 91))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.EnterButton.setFont(font)
+self.EnterButton.setObjectName("EnterButton")
+self.EnterButton.clicked.connect(self.enter_action)
+self.RemoveLabel = QtWidgets.QLabel(self.page_2)
+self.RemoveLabel.setGeometry(QtCore.QRect(1400, 150, 351, 91))
+font = QtGui.QFont()
+font.setPointSize(26)
+self.RemoveLabel.setFont(font)
+self.RemoveLabel.setObjectName("RemoveLabel")
+47
+self.comboBox = QtWidgets.QComboBox(self.page_2)
+self.comboBox.setGeometry(QtCore.QRect(1400, 420, 411, 81))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.comboBox.setFont(font)
+self.comboBox.setObjectName("comboBox")
+self.comboBox.addItem("")
+self.comboBox.addItem("")
+self.comboBox.addItem("")
+self.RemoveButton = QtWidgets.QPushButton(self.page_2)
+self.RemoveButton.setGeometry(QtCore.QRect(1400, 650, 411, 81))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.RemoveButton.setFont(font)
+self.RemoveButton.setObjectName("RemoveButton")
+self.RemoveButton.clicked.connect(self.remove_action)
+self.stackedWidget.addWidget(self.page_2)
+################################################################ PAGE 3
+##################################################################################
+#########
+self.page_3 = QtWidgets.QWidget()
+self.page_3.setObjectName("page_3")
+self.HomeButton2 = QtWidgets.QPushButton(self.page_3)
+self.HomeButton2.setGeometry(QtCore.QRect(0, 0, 111, 61))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.HomeButton2.setFont(font)
+self.HomeButton2.setIcon(icon)
+self.HomeButton2.setObjectName("HomeButton2")
+self.HomeButton2.clicked.connect(self.home_page)
+self.SelectLabel_2 = QtWidgets.QLabel(self.page_3)
+self.SelectLabel_2.setGeometry(QtCore.QRect(10, 90, 191, 31))
+48
+font = QtGui.QFont()
+font.setPointSize(16)
+self.SelectLabel_2.setFont(font)
+self.SelectLabel_2.setObjectName("SelectLabel_2")
+self.calendarWidget = QtWidgets.QCalendarWidget(self.page_3)
+self.calendarWidget.setGeometry(QtCore.QRect(10, 120, 551, 231))
+self.calendarWidget.setObjectName("calendarWidget")
+self.SetDate_Button = QtWidgets.QPushButton(self.page_3)
+self.SetDate_Button.setGeometry(QtCore.QRect(160, 350, 251, 41))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.SetDate_Button.setFont(font)
+self.SetDate_Button.setObjectName("SetDate_Button")
+self.SetDate_Button.clicked.connect(self.getdate)
+self.Date_Label = QtWidgets.QLabel(self.page_3)
+self.Date_Label.setGeometry(QtCore.QRect(360, 70, 201, 61))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.Date_Label.setFont(font)
+self.Date_Label.setObjectName("Date_Label")
+self.Hour_Label = QtWidgets.QLabel(self.page_3)
+self.Hour_Label.setGeometry(QtCore.QRect(630, 100, 181, 51))
+font = QtGui.QFont()
+font.setPointSize(16)
+self.Hour_Label.setFont(font)
+self.Hour_Label.setObjectName("Hour_Label")
+self.dial = QtWidgets.QDial(self.page_3)
+self.dial.setGeometry(QtCore.QRect(640, 150, 161, 161))
+self.dial.setMaximum(24)
+self.dial.setObjectName("dial")
+self.dial.valueChanged.connect(self.onDialChanged)
+self.Defaut_TLabel = QtWidgets.QLabel(self.page_3)
+49
+self.Defaut_TLabel.setGeometry(QtCore.QRect(710, 320, 31, 51))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.Defaut_TLabel.setFont(font)
+self.Defaut_TLabel.setObjectName("Defaut_TLabel")
+self.PowerPlot_Button = QtWidgets.QPushButton(self.page_3)
+self.PowerPlot_Button.setGeometry(QtCore.QRect(840, 180, 281, 81))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.PowerPlot_Button.setFont(font)
+self.PowerPlot_Button.setObjectName("PowerPlot_Button")
+self.PowerPlot_Button.clicked.connect(self.getpower)
+self.Load1_Button = QtWidgets.QPushButton(self.page_3)
+self.Load1_Button.setGeometry(QtCore.QRect(1170, 100, 231, 51))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.Load1_Button.setFont(font)
+self.Load1_Button.setObjectName("Load1_Button")
+self.Load2_Button = QtWidgets.QPushButton(self.page_3)
+self.Load2_Button.setGeometry(QtCore.QRect(1170, 190, 231, 51))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.Load2_Button.setFont(font)
+self.Load2_Button.setObjectName("Load2_Button")
+self.Load3_Button = QtWidgets.QPushButton(self.page_3)
+self.Load3_Button.setGeometry(QtCore.QRect(1170, 280, 231, 51))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.Load3_Button.setFont(font)
+self.Load3_Button.setObjectName("Load3_Button")
+self.frame = QtWidgets.QFrame(self.page_3)
+self.frame.setGeometry(QtCore.QRect(10, 430, 871, 591))
+self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+50
+self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+self.frame.setObjectName("frame")
+self.frame_2 = QtWidgets.QFrame(self.page_3)
+self.frame_2.setGeometry(QtCore.QRect(970, 430, 871, 591))
+self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
+self.frame_2.setObjectName("frame_2")
+self.PowerFactorPlot_Button = QtWidgets.QPushButton(self.page_3)
+self.PowerFactorPlot_Button.setGeometry(QtCore.QRect(1590, 180, 281,
+81))
+font = QtGui.QFont()
+font.setPointSize(22)
+self.PowerFactorPlot_Button.setFont(font)
+self.PowerFactorPlot_Button.setObjectName("PowerFactorPlot_Button")
+self.PowerFactorPlot_Button.clicked.connect(self.getpf)
+self.Indicatot_1 = QtWidgets.QLabel(self.page_3)
+self.Indicatot_1.setGeometry(QtCore.QRect(1450, 100, 71, 51))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.Indicatot_1.setFont(font)
+self.Indicatot_1.setText("")
+self.Indicatot_1.setObjectName("Indicatot_1")
+self.Indicator_2 = QtWidgets.QLabel(self.page_3)
+self.Indicator_2.setGeometry(QtCore.QRect(1450, 190, 71, 51))
+font = QtGui.QFont()
+font.setPointSize(18)
+self.Indicator_2.setFont(font)
+self.Indicator_2.setText("")
+self.Indicator_2.setObjectName("Indicator_2")
+self.Indicator_3 = QtWidgets.QLabel(self.page_3)
+self.Indicator_3.setGeometry(QtCore.QRect(1450, 280, 71, 51))
+font = QtGui.QFont()
+font.setPointSize(18)
+51
+self.Indicator_3.setFont(font)
+self.Indicator_3.setText("")
+self.Indicator_3.setObjectName("Indicator_3")
+self.stackedWidget.addWidget(self.page_3)
+###############################################################################
+##################################################################################
+######
+MainWindow.setCentralWidget(self.centralwidget)
+self.retranslateUi(MainWindow)
+self.stackedWidget.setCurrentIndex(0)
+QtCore.QMetaObject.connectSlotsByName(MainWindow)
+#########################################################################
+INITIALIZING COUNT VALUES
+##################################################################################
+self.countRealPower=0
+self.countPoawerFactor=0
+self.dialvalue='0'
+################################ Set the default text for the labels and combo
+box
+###############################################################################
+self.Load1_Label.setText('LOAD_1')
+self.Load2_Label.setText('LOAD_2')
+self.Load3_Label.setText('LOAD_3')
+###############################################################################
+##################################################################################
+#
+def retranslateUi(self, MainWindow):
+_translate = QtCore.QCoreApplication.translate
+52
+MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+self.TitleLabel.setText(_translate("MainWindow", "ELECTRICAL APPLIANCE
+HEALTH MONITORING SYSTEM WITH IOT"))
+self.AddButton.setText(_translate("MainWindow", "ADD LOADS"))
+self.HealthButton.setText(_translate("MainWindow", "APLLIANCE HEALTH
+DATA"))
+self.HomeButton1.setText(_translate("MainWindow", "Home"))
+self.SelectLabel.setText(_translate("MainWindow", "SELECTED LOADS"))
+self.Load1_Label.setText(_translate("MainWindow", "LOAD_1"))
+self.Load2_Label.setText(_translate("MainWindow", "LOAD_2"))
+self.Load3_Label.setText(_translate("MainWindow", "LOAD_3"))
+self.AddLabel.setText(_translate("MainWindow", "ADD NEW LOADS"))
+self.NameLabel.setText(_translate("MainWindow", "NAME :"))
+self.RatingLabel.setText(_translate("MainWindow", "RATING :"))
+self.EnterButton.setText(_translate("MainWindow", "ENTER"))
+self.RemoveLabel.setText(_translate("MainWindow", "REMOVE LOADS"))
+self.comboBox.setItemText(0, _translate("MainWindow", "First_Load"))
+self.comboBox.setItemText(1, _translate("MainWindow", "Second_Load"))
+self.comboBox.setItemText(2, _translate("MainWindow", "Third_Load"))
+self.RemoveButton.setText(_translate("MainWindow", "REMOVE"))
+self.HomeButton2.setText(_translate("MainWindow", "Home"))
+self.SelectLabel_2.setText(_translate("MainWindow", "SELECT A DATE"))
+self.SetDate_Button.setText(_translate("MainWindow", "SET DATE"))
+self.Date_Label.setText(_translate("MainWindow", "01-01-2023"))
+self.Hour_Label.setText(_translate("MainWindow", "SELECT HOUR"))
+self.Defaut_TLabel.setText(_translate("MainWindow", "1"))
+self.PowerPlot_Button.setText(_translate("MainWindow", "POWER"))
+self.Load1_Button.setText(_translate("MainWindow", "LOAD 1"))
+self.Load2_Button.setText(_translate("MainWindow", "LOAD 2"))
+self.Load3_Button.setText(_translate("MainWindow", "LOAD 3"))
+self.PowerFactorPlot_Button.setText(_translate("MainWindow", "POWER
+FACTOR"))
+###############################################################################
+##################################################################################
+#######
+def loads_page(self):
+53
+self.stackedWidget.setCurrentIndex(1)
+def health_page(self):
+self.stackedWidget.setCurrentIndex(2)
+def home_page(self):
+self.stackedWidget.setCurrentIndex(0)
+############################################################### Page_2
+##################################################################################
+####
+def enter_action(self):
+# Get the text from the text edit
+text = self.textEdit1.toPlainText()
+# Check if there is an empty label
+if self.Load1_Label.text() == 'LOAD_1':
+self.Load1_Label.setText(text)
+self.Load1_Button.setText(text)
+elif self.Load2_Label.text() == 'LOAD_2':
+self.Load2_Label.setText(text)
+self.Load2_Button.setText(text)
+elif self.Load3_Label.text() == 'LOAD_3':
+self.Load3_Label.setText(text)
+self.Load3_Button.setText(text)
+# Clear the text edit
+self.textEdit1.clear()
+# Rename the items in the combo box
+self.comboBox.setItemText(0, self.Load1_Label.text())
+self.comboBox.setItemText(1, self.Load2_Label.text())
+self.comboBox.setItemText(2, self.Load3_Label.text())
+def remove_action(self):
+# Get the selected item from the combo box
+selected_item = self.comboBox.currentText()
+# Check which label contains the selected item and clear it
+54
+if self.Load1_Label.text() == selected_item:
+self.Load1_Label.setText('LOAD_1')
+self.Load1_Button.setText('LOAD 1')
+self.comboBox.setItemText(0, self.Load1_Label.text())
+elif self.Load2_Label.text() == selected_item:
+self.Load2_Label.setText('LOAD_2')
+self.Load2_Button.setText('LOAD 2')
+self.comboBox.setItemText(1, self.Load2_Label.text())
+elif self.Load3_Label.text() == selected_item:
+self.Load3_Label.setText('LOAD_3')
+self.Load3_Button.setText('LOAD 3')
+self.comboBox.setItemText(2, self.Load3_Label.text())
+############################################################## Page_3
+##################################################################################
+######
+def onDialChanged(self, value):
+if(value<10):
+self.dialvalue='0'+str(value)
+else:
+self.dialvalue=str(value)
+self.Defaut_TLabel.setText(str(value))
+def getdate(self):
+self.Date_Label.setText(self.calendarWidget.selectedDate().toString("dd-MM-yyyy"))
+def getpower(self):
+print("entered getpower")
+power_array = []
+time_array = []
+power =
+database.child("Load1").child("Power").child(self.calendarWidget.selectedDate().to
+String("dd-MM-yyyy")).get()
+for self.key,self.value in power.val().items():
+55
+if str(self.key).startswith(self.dialvalue):
+self.dt = datetime.strptime(self.key, '%H:%M:%S')
+if self.dt.minute % 8 == 0:
+time_array.append(self.key)
+power_array.append(self.value)
+if(self.countRealPower==0):
+self.layout = QVBoxLayout(self.frame)
+self.fig = plt.figure()
+self.ax = self.fig.add_subplot(111)
+self.ax.plot(time_array,power_array,linewidth=3)
+self.ax.set_ylabel('Power',fontsize=14)
+self.ax.set_xlabel('Time',fontsize=14)
+self.ax.set_title('Power V/S Time')
+self.ax.grid(True)
+self.fig.tight_layout()
+self.canvas = FigureCanvas(self.fig)
+self.layout.addWidget(self.canvas)
+self.countRealPower+=1
+else:
+self.canvas.figure.clear()
+self.fig = plt.figure()
+self.ax = self.canvas.figure.add_subplot(111)
+self.ax.plot(time_array,power_array,linewidth=3)
+self.ax.set_ylabel('Power',fontsize=14)
+self.ax.set_xlabel('Time',fontsize=14)
+self.ax.set_title('Power V/S Time')
+self.ax.grid(True)
+self.fig.tight_layout()
+self.canvas.draw()
+def getpf(self):
+pf_array =[]
+timepf_array =[]
+pf =
+database.child("Load1").child("pf").child(self.calendarWidget.selectedDate().toStr
+ing("dd-MM-yyyy")).get()
+56
+for self.key,self.value in pf.val().items():
+if str(self.key).startswith(self.dialvalue):
+dt2 = datetime.strptime(self.key, '%H:%M:%S')
+if dt2.minute % 8 == 0:
+timepf_array.append(self.key)
+pf_array.append(self.value)
+if(self.countPoawerFactor==0):
+self.layout2 = QVBoxLayout(self.frame_2)
+self.fig2 = plt.figure()
+self.ax2 = self.fig2.add_subplot(111)
+self.ax2.plot(timepf_array,pf_array,linewidth=3)
+self.ax2.set_ylabel('Power Factor',fontsize=14)
+self.ax2.set_xlabel('Time',fontsize=14)
+self.ax2.set_title('POwer Factor V/S Time')
+self.ax2.grid(True)
+self.fig2.tight_layout()
+self.canvas2 = FigureCanvas(self.fig2)
+self.layout2.addWidget(self.canvas2)
+self.countPoawerFactor+=1
+else:
+self.canvas2.figure.clear()
+self.fig2 = plt.figure()
+self.ax2 = self.canvas2.figure.add_subplot(111)
+self.ax2.plot(timepf_array,pf_array,linewidth=3)
+self.ax2.set_ylabel('Power Factor',fontsize=14)
+self.ax2.set_xlabel('Time',fontsize=14)
+self.ax2.set_title('Power Factor V/S Time')
+self.ax2.grid(True)
+self.fig2.tight_layout()
+self.canvas2.draw()
+###############################################################################
+##################################################################################
+#####
+if __name__ == "__main__":
+import sys
+app = QtWidgets.QApplication(sys.argv)
+57
+MainWindow = QtWidgets.QMainWindow()
+ui = Ui_MainWindow()
+ui.setupUi(MainWindow)
+MainWindow.show()
+sys.exit(app.exec_())
